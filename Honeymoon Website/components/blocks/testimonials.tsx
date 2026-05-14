@@ -1,0 +1,84 @@
+"use client"
+
+import Image from "next/image"
+import { Quote } from "lucide-react"
+
+const testimonials = [
+  {
+    id: 1,
+    name: "Sarah & Michael",
+    location: "New York, USA",
+    image: "https://images.unsplash.com/photo-1621579311897-0f1a0a5c9d14?q=80&w=2070",
+    quote: "Every detail was perfect, from the private villa in Bali to the sunset dinner on the beach. The team anticipated our every need and created moments we&apos;ll cherish forever.",
+    destination: "Bali, Indonesia",
+  },
+  {
+    id: 2,
+    name: "Emma & James",
+    location: "London, UK",
+    image: "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?q=80&w=2069",
+    quote: "We were blown away by the level of service. Our dedicated travel designer created an itinerary that perfectly matched our interests. The Maldives trip exceeded all expectations.",
+    destination: "Maldives",
+  },
+  {
+    id: 3,
+    name: "Jennifer & David",
+    location: "Sydney, Australia",
+    image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=2070",
+    quote: "From the moment we reached out, we felt special. The VIP upgrades, the exclusive experiences - everything was world-class. An unforgettable honeymoon.",
+    destination: "Santorini, Greece",
+  },
+]
+
+export function Testimonials() {
+  return (
+    <section className="py-24 lg:py-32 bg-background">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-foreground">
+            What our travelers say
+          </h2>
+        </div>
+
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          {testimonials.map((testimonial) => (
+            <div 
+              key={testimonial.id} 
+              className="flex flex-col"
+            >
+              {/* Quote Icon */}
+              <Quote className="h-8 w-8 text-muted-foreground/30 mb-6" strokeWidth={1} />
+              
+              {/* Quote */}
+              <blockquote className="text-foreground leading-relaxed mb-8 flex-1">
+                &ldquo;{testimonial.quote}&rdquo;
+              </blockquote>
+              
+              {/* Author */}
+              <div className="flex items-center gap-4 pt-6 border-t border-border">
+                <div className="relative h-12 w-12 rounded-full overflow-hidden">
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="font-medium text-foreground">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {testimonial.destination}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
