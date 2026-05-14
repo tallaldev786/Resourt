@@ -7,7 +7,7 @@ const iconMap = {
   star: Star,
   globe: Globe,
   shield: Shield,
-} as const
+}
 
 const defaultFeatures = [
   { icon: "sparkles" as const, title: "Original experiences", description: "We'll plan your trip around your personal interests and preferences. We get to know you first. So we can craft a luxury journey – and a story – that's uniquely yours." },
@@ -27,8 +27,8 @@ interface FeaturesData {
   features?: FeatureItem[]
 }
 
-export function Features({ data }: { data?: FeaturesData } = {}) {
-  const heading = data?.heading || "Why book with Jacada?"
+export function Features({ data }: { data?: FeaturesData }) {
+  const heading = data?.heading || "Why book with us?"
   const features = data?.features?.length ? data.features : defaultFeatures
 
   return (
@@ -36,14 +36,11 @@ export function Features({ data }: { data?: FeaturesData } = {}) {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#1a1a1a]">{heading}</h2>
-          {data?.subheading && (
-            <p className="mt-4 text-[#666] max-w-xl mx-auto">{data.subheading}</p>
-          )}
+          {data?.subheading && <p className="mt-4 text-[#666] max-w-xl mx-auto">{data.subheading}</p>}
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {features.map((feature, index) => {
-            const IconComponent = iconMap[feature.icon] ?? Sparkles
+            const IconComponent = iconMap[feature.icon] || Sparkles
             return (
               <div key={index} className="text-center">
                 <div className="w-14 h-14 mx-auto mb-6 flex items-center justify-center border border-[#0d7377] rounded-full">

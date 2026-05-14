@@ -14,18 +14,20 @@ import {
 } from "@/components/ui/select"
 import { ArrowRight } from "lucide-react"
 
-const destinations = [
-  "Africa",
-  "Asia",
-  "Central Asia",
-  "Europe",
-  "Indian Subcontinent",
-  "Latin America",
-  "South Pacific",
-  "Not sure yet",
+const defaultDestinations = [
+  "Africa", "Asia", "Central Asia", "Europe",
+  "Indian Subcontinent", "Latin America", "South Pacific", "Not sure yet",
 ]
 
-export function ContactForm() {
+interface ContactFormData {
+  heading?: string
+  subheading?: string
+  destinationOptions?: Array<{ label: string; value: string }>
+  submitButtonText?: string
+  successMessage?: string
+}
+
+export function ContactForm({ data }: { data?: ContactFormData } = {}) {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -35,6 +37,13 @@ export function ContactForm() {
     message: "",
   })
 
+  const heading = data?.heading || "Your adventure starts now"
+  const subheading = data?.subheading || "Whatever you want your luxury private tour or safari itinerary to include, we'll create something fully bespoke for you... and only you."
+  const destinations = data?.destinationOptions?.length
+    ? data.destinationOptions.map((d) => d.label)
+    : defaultDestinations
+  const submitText = data?.submitButtonText || "Start planning"
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Form submitted:", formData)
@@ -43,24 +52,15 @@ export function ContactForm() {
   return (
     <section id="contact" className="py-20 lg:py-28 bg-[#f8f8f6]">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-14">
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#1a1a1a] mb-5">
-            Your adventure starts now
-          </h2>
-          <p className="text-[#666] leading-relaxed">
-            Whatever you want your luxury private tour or safari itinerary to include, 
-            we&apos;ll create something fully bespoke for you... and only you.
-          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#1a1a1a] mb-5">{heading}</h2>
+          <p className="text-[#666] leading-relaxed">{subheading}</p>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <Label htmlFor="firstName" className="text-xs uppercase tracking-wider text-[#666]">
-                First name
-              </Label>
+              <Label htmlFor="firstName" className="text-xs uppercase tracking-wider text-[#666]">First name</Label>
               <Input
                 id="firstName"
                 value={formData.firstName}
@@ -70,9 +70,7 @@ export function ContactForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="lastName" className="text-xs uppercase tracking-wider text-[#666]">
-                Last name
-              </Label>
+              <Label htmlFor="lastName" className="text-xs uppercase tracking-wider text-[#666]">Last name</Label>
               <Input
                 id="lastName"
                 value={formData.lastName}
@@ -85,9 +83,7 @@ export function ContactForm() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs uppercase tracking-wider text-[#666]">
-                Email
-              </Label>
+              <Label htmlFor="email" className="text-xs uppercase tracking-wider text-[#666]">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -98,9 +94,7 @@ export function ContactForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-xs uppercase tracking-wider text-[#666]">
-                Phone (optional)
-              </Label>
+              <Label htmlFor="phone" className="text-xs uppercase tracking-wider text-[#666]">Phone (optional)</Label>
               <Input
                 id="phone"
                 type="tel"
@@ -112,30 +106,21 @@ export function ContactForm() {
           </div>
 
           <div className="space-y-2">
-            <Label className="text-xs uppercase tracking-wider text-[#666]">
-              Where would you like to travel?
-            </Label>
-            <Select
-              value={formData.destination}
-              onValueChange={(value) => setFormData({ ...formData, destination: value })}
-            >
+            <Label className="text-xs uppercase tracking-wider text-[#666]">Where would you like to travel?</Label>
+            <Select value={formData.destination} onValueChange={(value) => setFormData({ ...formData, destination: value })}>
               <SelectTrigger className="border-0 border-b border-[#ccc] rounded-none bg-transparent px-0 h-12 focus:ring-0 [&>span]:text-left text-[#1a1a1a]">
                 <SelectValue placeholder="Select a destination" />
               </SelectTrigger>
               <SelectContent>
                 {destinations.map((dest) => (
-                  <SelectItem key={dest} value={dest}>
-                    {dest}
-                  </SelectItem>
+                  <SelectItem key={dest} value={dest}>{dest}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-xs uppercase tracking-wider text-[#666]">
-              Tell us about your dream trip
-            </Label>
+            <Label htmlFor="message" className="text-xs uppercase tracking-wider text-[#666]">Tell us about your dream trip</Label>
             <Textarea
               id="message"
               rows={4}
@@ -146,11 +131,8 @@ export function ContactForm() {
           </div>
 
           <div className="pt-6">
-            <Button 
-              type="submit" 
-              className="bg-[#1a1a1a] text-white hover:bg-[#333] rounded-none h-14 px-10"
-            >
-              Start planning
+            <Button type="submit" className="bg-[#1a1a1a] text-white hover:bg-[#333] rounded-none h-14 px-10">
+              {submitText}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>

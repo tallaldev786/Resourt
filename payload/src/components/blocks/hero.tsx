@@ -28,14 +28,14 @@ interface HeroData {
   ctaText?: string
 }
 
-export function Hero({ data }: { data?: HeroData } = {}) {
+export function Hero({ data }: { data?: HeroData }) {
   const [selectedDestination, setSelectedDestination] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
 
   const heading = data?.heading || "Exceptional Journeys"
   const subheading = data?.subheading || "Set off on remarkable, deeply personal trips planned by award-winning specialists"
-  const destinations = data?.destinations?.length
+  const destinations = data?.destinations
     ? data.destinations.map((d) => ({ name: d.label }))
     : defaultDestinations
 
@@ -65,7 +65,6 @@ export function Hero({ data }: { data?: HeroData } = {}) {
         <h1 className="font-serif text-[3.5rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-normal text-white leading-none tracking-[-0.02em] mb-8">
           {heading}
         </h1>
-
         <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-16 leading-relaxed font-light tracking-wide">
           {subheading}
         </p>
@@ -74,7 +73,6 @@ export function Hero({ data }: { data?: HeroData } = {}) {
           <div className="hidden sm:flex items-center px-6 border-r border-[#e5e5e5]">
             <span className="text-sm text-[#666] whitespace-nowrap">Take me to</span>
           </div>
-
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -83,16 +81,12 @@ export function Hero({ data }: { data?: HeroData } = {}) {
               <span className="text-[15px]">{selectedDestination || "Not sure where?"}</span>
               <ChevronDown className={`h-4 w-4 text-[#999] transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`} />
             </button>
-
             {isDropdownOpen && (
               <div className="absolute top-full left-0 right-0 bg-white border-t border-[#e5e5e5] shadow-xl z-20 max-h-[300px] overflow-y-auto">
                 {destinations.map((dest) => (
                   <button
                     key={dest.name}
-                    onClick={() => {
-                      setSelectedDestination(dest.name)
-                      setIsDropdownOpen(false)
-                    }}
+                    onClick={() => { setSelectedDestination(dest.name); setIsDropdownOpen(false) }}
                     className="w-full px-6 py-4 text-left text-[15px] text-[#1a1a1a] hover:bg-[#f5f5f5] transition-colors border-b border-[#f0f0f0] last:border-b-0"
                   >
                     {dest.name}
@@ -104,10 +98,7 @@ export function Hero({ data }: { data?: HeroData } = {}) {
         </div>
 
         <div className="mt-10">
-          <Link
-            href="#contact"
-            className="inline-flex items-center text-white/80 hover:text-white text-sm transition-colors group"
-          >
+          <Link href="#contact" className="inline-flex items-center text-white/80 hover:text-white text-sm transition-colors group">
             <span className="border-b border-white/40 group-hover:border-white/80 pb-0.5">
               Unsure where? Get inspired with our trip planner
             </span>

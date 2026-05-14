@@ -1,8 +1,5 @@
-"use client"
-
 import Image from "next/image"
 import { Quote } from "lucide-react"
-import { getMediaUrl } from "@/lib/payload"
 
 const defaultTestimonials = [
   { id: 1, authorName: "Sarah & Michael", destination: "Bali, Indonesia", authorImage: "https://images.unsplash.com/photo-1621579311897-0f1a0a5c9d14?q=80&w=2070", quote: "Every detail was perfect, from the private villa in Bali to the sunset dinner on the beach. The team anticipated our every need and created moments we'll cherish forever." },
@@ -22,43 +19,39 @@ interface TestimonialsData {
   testimonials?: TestimonialItem[]
 }
 
-export function Testimonials({ data }: { data?: TestimonialsData } = {}) {
+function resolveImageUrl(image: string | { url?: string } | undefined): string {
+  if (!image) return ""
+  if (typeof image === "string") return image
+  const url = image.url ?? ""
+  return url.startsWith("http") ? url : `${process.env.NEXT_PUBLIC_PAYLOAD_URL || "http://localhost:3001"}${url}`
+}
+
+export function Testimonials({ data }: { data?: TestimonialsData }) {
   const heading = data?.heading || "What our travelers say"
   const testimonials = data?.testimonials?.length
-    ? data.testimonials.map((t, i) => ({
-        id: i,
-        authorName: t.authorName,
-        destination: t.destination,
-        quote: t.quote,
-        authorImage: getMediaUrl(t.authorImage),
-      }))
+    ? data.testimonials.map((t, i) => ({ id: i, ...t, authorImage: resolveImageUrl(t.authorImage) }))
     : defaultTestimonials
 
   return (
-    <section className="py-24 lg:py-32 bg-background">
+    <section className="py-24 lg:py-32 bg-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-foreground">{heading}</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1a1a1a]">{heading}</h2>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="flex flex-col">
-              <Quote className="h-8 w-8 text-muted-foreground/30 mb-6" strokeWidth={1} />
-              <blockquote className="text-foreground leading-relaxed mb-8 flex-1">
-                &ldquo;{testimonial.quote}&rdquo;
-              </blockquote>
-              <div className="flex items-center gap-4 pt-6 border-t border-border">
+              <Quote className="h-8 w-8 text-[#ccc] mb-6" strokeWidth={1} />
+              <blockquote className="text-[#333] leading-relaxed mb-8 flex-1">&ldquo;{testimonial.quote}&rdquo;</blockquote>
+              <div className="flex items-center gap-4 pt-6 border-t border-[#e5e5e5]">
                 {testimonial.authorImage && (
                   <div className="relative h-12 w-12 rounded-full overflow-hidden flex-shrink-0">
                     <Image src={testimonial.authorImage} alt={testimonial.authorName} fill className="object-cover" />
                   </div>
                 )}
                 <div>
-                  <p className="font-medium text-foreground">{testimonial.authorName}</p>
-                  {testimonial.destination && (
-                    <p className="text-sm text-muted-foreground">{testimonial.destination}</p>
-                  )}
+                  <p className="font-medium text-[#1a1a1a]">{testimonial.authorName}</p>
+                  {testimonial.destination && <p className="text-sm text-[#666]">{testimonial.destination}</p>}
                 </div>
               </div>
             </div>
