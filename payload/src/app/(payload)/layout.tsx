@@ -2,6 +2,8 @@ import React from 'react'
 import { RootLayout } from '@payloadcms/next/layouts'
 import config from '@payload-config'
 import { importMap } from './admin/importMap'
+import { serverFunction } from './actions'
+import '@payloadcms/next/css'
 
 type Args = {
   children: React.ReactNode
@@ -9,7 +11,7 @@ type Args = {
 
 const Layout: React.FC<Args> = async ({ children }) => {
   return (
-    <RootLayout config={config} importMap={importMap}>
+    <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
       {children}
     </RootLayout>
   )

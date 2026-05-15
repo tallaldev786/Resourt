@@ -1,5 +1,5 @@
 import { buildConfig } from 'payload'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { Users } from './collections/Users'
@@ -25,10 +25,8 @@ export default buildConfig({
   ],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || 'resourt-secret-key-change-me',
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || 'file:./payload.db',
-    },
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || 'mongodb://127.0.0.1:27017/resourt-cms',
   }),
   cors: ['http://localhost:3000', 'http://localhost:3001'],
   csrf: ['http://localhost:3000', 'http://localhost:3001'],
