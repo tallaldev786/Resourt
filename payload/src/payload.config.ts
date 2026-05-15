@@ -1,6 +1,8 @@
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -30,4 +32,19 @@ export default buildConfig({
   }),
   cors: ['http://localhost:3000', 'http://localhost:3001'],
   csrf: ['http://localhost:3000', 'http://localhost:3001'],
+  plugins: [
+    seoPlugin({
+      collections: ['pages', 'destinations', 'experiences'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }: { doc: Record<string, unknown> }) =>
+        `${doc?.title ?? doc?.name ?? ''} | Jacada Travel`,
+      generateDescription: ({ doc }: { doc: Record<string, unknown> }) =>
+        (doc?.excerpt as string) ?? '',
+    }),
+    formBuilderPlugin({
+      fields: {
+        payment: false,
+      },
+    }),
+  ],
 })
