@@ -329,8 +329,9 @@ export function Header() {
               })}
             </div>
 
-            <Link href="/" className="lg:hidden">
-              <span className="font-serif text-xl text-white">Jacada Travel</span>
+            {/* Mobile: logo centered */}
+            <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:hidden">
+              <span className="font-serif text-[18px] text-white">Jacada Travel</span>
             </Link>
 
             <div className="hidden items-center gap-5 lg:flex">
@@ -354,102 +355,106 @@ export function Header() {
               className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.24em] text-white lg:hidden"
             >
               <Menu className="h-5 w-5" strokeWidth={1.8} />
-              <span>Menu</span>
             </button>
           </nav>
         ) : (
-          <nav className="mx-auto max-w-[1400px] px-6 lg:px-10">
+          <nav className="mx-auto max-w-[1400px] px-5 lg:px-10">
             <div className="flex h-20 lg:h-24 items-center justify-between">
-              {isInnerPage ? (
-                <Link
-                  href="http://localhost:3000"
-                  className="flex items-center gap-1.5 text-[13px] tracking-wide text-white/90 hover:text-white transition-colors"
-                >
-                  ← Home
-                </Link>
-              ) : (
-                <div className="flex items-center gap-1.5 text-[13px] tracking-wide text-white/90 transition-colors">
-                  <span className="hidden sm:inline">Call us on</span>
-                  <a
-                    href="tel:+1234567890"
-                    className="font-medium text-white transition-colors hover:text-white/70"
+              {/* Left */}
+              <div className="w-[100px] lg:w-[140px]">
+                {isInnerPage ? (
+                  <Link
+                    href="http://localhost:3000"
+                    className="flex items-center gap-1.5 text-[13px] tracking-wide text-white/90 hover:text-white transition-colors"
                   >
-                    Call
-                  </a>
-                </div>
-              )}
+                    ← Home
+                  </Link>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-[13px] tracking-wide text-white/90 transition-colors">
+                    <span className="hidden sm:inline">Call us on</span>
+                    <a
+                      href="tel:+1234567890"
+                      className="font-medium text-white transition-colors hover:text-white/70"
+                    >
+                      Call
+                    </a>
+                  </div>
+                )}
+              </div>
 
+              {/* Center Logo */}
               <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-                <span className="font-serif text-[22px] font-normal tracking-[-0.01em] text-white transition-colors lg:text-[26px]">
+                <span className="font-serif text-[20px] sm:text-[22px] font-normal tracking-[-0.01em] text-white transition-colors lg:text-[26px]">
                   Jacada Travel
                 </span>
               </Link>
 
-              <div className="w-[88px]" aria-hidden="true" />
+              {/* Right — spacer only (no menu button in unscrolled state) */}
+              <div className="w-[100px] lg:w-[140px]" />
             </div>
           </nav>
         )}
       </header>
 
-      {/* Full Screen Menu Overlay - Jacada Style */}
-      <div 
-        className={`fixed inset-0 z-[100] bg-[#1a1a1a] transition-all duration-500 ease-in-out ${
+      {/* Backdrop */}
+      <div
+        onClick={() => setIsOpen(false)}
+        className={`fixed inset-0 z-[99] bg-black/60 backdrop-blur-sm transition-all duration-400 ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
-      >
-        {/* Close Button */}
-        <button 
-          onClick={() => setIsOpen(false)}
-          className="absolute top-8 right-8 lg:right-12 text-white/80 hover:text-white transition-colors"
-        >
-          <X className="h-7 w-7" strokeWidth={1.5} />
-        </button>
+      />
 
-        {/* Menu Content */}
-        <div className="h-full flex flex-col justify-center px-8 lg:px-20 xl:px-32">
-          <nav className="space-y-4 lg:space-y-6">
-            {navigation.map((item, index) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className={`block font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-white hover:text-[#0d7377] transition-all duration-300 transform ${
-                  isOpen ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
-                }`}
-                style={{ transitionDelay: isOpen ? `${index * 80}ms` : "0ms" }}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-          
-          {/* Contact Info */}
-          <div className={`mt-16 pt-10 border-t border-white/10 transition-all duration-500 ${
-            isOpen ? "opacity-100" : "opacity-0"
-          }`} style={{ transitionDelay: isOpen ? "500ms" : "0ms" }}>
-            <p className="text-white/50 text-sm tracking-wide mb-4">Get in touch</p>
-            <a 
-              href="tel:+1234567890" 
-              className="text-xl lg:text-2xl text-white hover:text-[#0d7377] transition-colors"
+      {/* Sidebar Menu — slides in from right */}
+      <div
+        className={`fixed top-0 right-0 z-[100] h-full w-[80vw] max-w-[340px] bg-[#1a1a1a] flex flex-col transition-transform duration-400 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Header row inside sidebar */}
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+          <span className="font-serif text-[17px] text-white tracking-wide">Jacada Travel</span>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-white/70 hover:text-white transition-colors"
+          >
+            <X className="h-6 w-6" strokeWidth={1.5} />
+          </button>
+        </div>
+
+        {/* Nav Links */}
+        <nav className="flex-1 overflow-y-auto px-6 py-6 space-y-1">
+          {navigation.map((item, index) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center justify-between py-3.5 border-b border-white/8 font-serif text-[22px] text-white hover:text-[#0d7377] transition-all duration-300 ${
+                isOpen ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"
+              }`}
+              style={{ transitionDelay: isOpen ? `${index * 60}ms` : "0ms" }}
             >
+              {item.name}
+              <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" strokeWidth={1.5} />
+            </Link>
+          ))}
+        </nav>
+
+        {/* Footer inside sidebar */}
+        <div className="px-6 py-6 border-t border-white/10 space-y-4">
+          <div>
+            <p className="text-white/40 text-xs uppercase tracking-[0.15em] mb-2">Get in touch</p>
+            <a href="tel:+1234567890" className="text-white text-base hover:text-[#0d7377] transition-colors block">
               +1 (234) 567-890
             </a>
-            <p className="text-white/50 text-sm mt-4 tracking-wide">
-              hello@jacadatravel.com
-            </p>
+            <p className="text-white/40 text-xs mt-1">hello@jacadatravel.com</p>
           </div>
-          
-          {/* CTA Button */}
-          <div className={`mt-10 transition-all duration-500 ${
-            isOpen ? "opacity-100" : "opacity-0"
-          }`} style={{ transitionDelay: isOpen ? "600ms" : "0ms" }}>
-            <Button 
-              className="bg-[#0d7377] hover:bg-[#0a5c5f] text-white rounded-none h-14 px-10 text-[15px] tracking-wide"
-              onClick={() => setIsOpen(false)}
-            >
-              Plan Your Journey
-            </Button>
-          </div>
+          <Link
+            href="#contact"
+            onClick={() => setIsOpen(false)}
+            className="block w-full bg-[#0d7377] hover:bg-[#0a5c5f] text-white text-center py-3.5 text-[13px] uppercase tracking-[0.15em] transition-colors"
+          >
+            Plan Your Journey
+          </Link>
         </div>
       </div>
     </>
