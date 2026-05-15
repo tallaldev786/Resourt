@@ -12,7 +12,6 @@ export const DestinationsBlock: Block = {
     {
       name: 'destinations',
       type: 'array',
-      required: true,
       fields: [
         {
           name: 'location',
@@ -30,7 +29,6 @@ export const DestinationsBlock: Block = {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
-          required: true,
         },
         {
           name: 'link',

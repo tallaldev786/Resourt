@@ -106,3 +106,101 @@ export async function getJournalArticles(limit = 8) {
     return []
   }
 }
+
+export async function getAllDestinations(limit = 50) {
+  try {
+    const res = await fetch(
+      `${PAYLOAD_URL}/api/destinations?limit=${limit}&depth=1`,
+      { next: { revalidate: 60 } }
+    )
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.docs ?? []
+  } catch {
+    return []
+  }
+}
+
+export async function getDestinationBySlug(slug: string) {
+  try {
+    const res = await fetch(
+      `${PAYLOAD_URL}/api/destinations?where[slug][equals]=${slug}&depth=2`,
+      { next: { revalidate: 60 } }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.docs?.[0] ?? null
+  } catch {
+    return null
+  }
+}
+
+export async function getAllExperiences(limit = 50) {
+  try {
+    const res = await fetch(
+      `${PAYLOAD_URL}/api/experiences?limit=${limit}&depth=1`,
+      { next: { revalidate: 60 } }
+    )
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.docs ?? []
+  } catch {
+    return []
+  }
+}
+
+export async function getExperienceBySlug(slug: string) {
+  try {
+    const res = await fetch(
+      `${PAYLOAD_URL}/api/experiences?where[slug][equals]=${slug}&depth=2`,
+      { next: { revalidate: 60 } }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.docs?.[0] ?? null
+  } catch {
+    return null
+  }
+}
+
+export async function getAllTours(limit = 50) {
+  try {
+    const res = await fetch(
+      `${PAYLOAD_URL}/api/tours?limit=${limit}&depth=1`,
+      { next: { revalidate: 60 } }
+    )
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.docs ?? []
+  } catch {
+    return []
+  }
+}
+
+export async function getTourBySlug(slug: string) {
+  try {
+    const res = await fetch(
+      `${PAYLOAD_URL}/api/tours?where[slug][equals]=${slug}&depth=2`,
+      { next: { revalidate: 60 } }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.docs?.[0] ?? null
+  } catch {
+    return null
+  }
+}
+
+export async function getJournalArticleBySlug(slug: string) {
+  try {
+    const res = await fetch(
+      `${PAYLOAD_URL}/api/journal?where[slug][equals]=${slug}&depth=2`,
+      { next: { revalidate: 60 } }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.docs?.[0] ?? null
+  } catch {
+    return null
+  }
+}

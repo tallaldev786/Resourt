@@ -12,7 +12,6 @@ export const ExperiencesBlock: Block = {
     {
       name: 'experiences',
       type: 'array',
-      required: true,
       maxRows: 4,
       fields: [
         {
@@ -32,7 +31,6 @@ export const ExperiencesBlock: Block = {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
-          required: true,
         },
         {
           name: 'link',

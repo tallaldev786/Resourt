@@ -7,6 +7,14 @@ import { Journal } from "./journal"
 import { ContactForm } from "./contact-form"
 import { Testimonials } from "./testimonials"
 import { Newsletter } from "./newsletter"
+import { InnerHero } from "./inner-hero"
+import { TextImage } from "./text-image"
+import { StatsBar } from "./stats-bar"
+import { TeamGrid } from "./team-grid"
+import { QuoteImage } from "./quote-image"
+import { PrinciplesGrid } from "./principles-grid"
+import { ImpactProjects } from "./impact-projects"
+import { CtaDark } from "./cta-dark"
 
 type AnyBlock = {
   blockType: string
@@ -36,6 +44,22 @@ export function BlockRenderer({ blocks }: { blocks: AnyBlock[] }) {
             return <Testimonials key={index} data={block as Parameters<typeof Testimonials>[0]["data"]} />
           case "newsletter":
             return <Newsletter key={index} data={block as Parameters<typeof Newsletter>[0]["data"]} />
+          case "innerHero":
+            return <InnerHero key={index} data={block as Parameters<typeof InnerHero>[0]["data"]} />
+          case "textImage":
+            return <TextImage key={index} data={block as Parameters<typeof TextImage>[0]["data"]} />
+          case "stats":
+            return <StatsBar key={index} data={block as Parameters<typeof StatsBar>[0]["data"]} />
+          case "team":
+            return <TeamGrid key={index} data={block as Parameters<typeof TeamGrid>[0]["data"]} />
+          case "quoteImage":
+            return <QuoteImage key={index} data={block as Parameters<typeof QuoteImage>[0]["data"]} />
+          case "principles":
+            return <PrinciplesGrid key={index} data={block as Parameters<typeof PrinciplesGrid>[0]["data"]} />
+          case "impactProjects":
+            return <ImpactProjects key={index} data={block as Parameters<typeof ImpactProjects>[0]["data"]} />
+          case "ctaDark":
+            return <CtaDark key={index} data={block as Parameters<typeof CtaDark>[0]["data"]} />
           default:
             return null
         }

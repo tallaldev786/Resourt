@@ -5,10 +5,10 @@ import { ChevronDown } from "lucide-react"
 import Link from "next/link"
 
 const heroVideos = [
-  "/Hotel%20Video.mp4",
-  "/Hotel-2.mp4",
-  "/Hotel-3.mp4",
-  "/Hotel-4.mp4",
+  "https://media.istockphoto.com/id/1081679810/video/high-angle-view-of-couples-checking-into-hotel-at-the-front-desk.mp4?s=mp4-640x640-is&k=20&c=vOOL2wcKEkCcKf6wgFJc0m6207cQttYsmE_zQFtFNfw=",
+  "https://cdn.pixabay.com/video/2022/06/29/122449-725502749_tiny.mp4",
+  "https://cdn.pixabay.com/video/2022/07/04/123075-726838226_large.mp4",
+  "https://cdn.pixabay.com/video/2024/02/29/202392-918066367_large.mp4",
 ]
 
 const defaultDestinations = [
@@ -54,7 +54,6 @@ export function Hero({ data }: { data?: HeroData } = {}) {
           preload="auto"
           onEnded={playNextVideo}
           className="absolute inset-0 w-full h-full object-cover scale-105"
-          poster="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920"
         >
           <source src={heroVideos[currentVideoIndex]} type="video/mp4" />
         </video>

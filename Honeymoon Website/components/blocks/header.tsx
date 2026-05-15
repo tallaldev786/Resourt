@@ -4,14 +4,15 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ChevronRight, Menu, Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation"
 
 const navigation = [
-  { name: "Destinations", href: "#destinations" },
-  { name: "Luxury Safaris", href: "#tours" },
-  { name: "Trip Types", href: "#experiences" },
-  { name: "Inspiration", href: "#journal" },
-  { name: "Positive Impact", href: "#features" },
-  { name: "About Us", href: "#about" },
+  { name: "Destinations", href: "/destinations" },
+  { name: "Luxury Safaris", href: "/tours" },
+  { name: "Trip Types", href: "/experiences" },
+  { name: "Inspiration", href: "/journal" },
+  { name: "Positive Impact", href: "/positive-impact" },
+  { name: "About Us", href: "/about" },
 ]
 
 const destinationMenu = [
@@ -172,6 +173,8 @@ const navDropdowns: Record<string, Array<{ label: string; hasArrow?: boolean }>>
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+  const isInnerPage = pathname !== "/"
   const [hoveredDestination, setHoveredDestination] = useState<string | null>(null)
   const submenuColumns = hoveredDestination
     ? destinationSubmenus[hoveredDestination]
@@ -357,15 +360,24 @@ export function Header() {
         ) : (
           <nav className="mx-auto max-w-[1400px] px-6 lg:px-10">
             <div className="flex h-20 lg:h-24 items-center justify-between">
-              <div className="flex items-center gap-1.5 text-[13px] tracking-wide text-white/90 transition-colors">
-                <span className="hidden sm:inline">Call us on</span>
-                <a
-                  href="tel:+1234567890"
-                  className="font-medium text-white transition-colors hover:text-white/70"
+              {isInnerPage ? (
+                <Link
+                  href="http://localhost:3000"
+                  className="flex items-center gap-1.5 text-[13px] tracking-wide text-white/90 hover:text-white transition-colors"
                 >
-                  Call
-                </a>
-              </div>
+                  ← Home
+                </Link>
+              ) : (
+                <div className="flex items-center gap-1.5 text-[13px] tracking-wide text-white/90 transition-colors">
+                  <span className="hidden sm:inline">Call us on</span>
+                  <a
+                    href="tel:+1234567890"
+                    className="font-medium text-white transition-colors hover:text-white/70"
+                  >
+                    Call
+                  </a>
+                </div>
+              )}
 
               <Link href="/" className="absolute left-1/2 -translate-x-1/2">
                 <span className="font-serif text-[22px] font-normal tracking-[-0.01em] text-white transition-colors lg:text-[26px]">
